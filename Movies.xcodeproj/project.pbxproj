@@ -53,8 +53,8 @@
 		84FB3D362B47610600B860FC /* CardImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardImageView.swift; sourceTree = "<group>"; };
 		84FB3D432B499A0800B860FC /* MoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FB3D4D2B499DA300B860FC /* MovieViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewModelTests.swift; sourceTree = "<group>"; };
-		84FB3D5B2B4CCC8000B860FC /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 		84FB3D5C2B4CCDB200B860FC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		84FB3D5D2B4CD10900B860FC /* Secrets.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Secrets.xcconfig; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,6 @@
 		8484BFE42AFD4117003256E0 = {
 			isa = PBXGroup;
 			children = (
-				84FB3D5B2B4CCC8000B860FC /* Secrets.xcconfig */,
 				8484BFEF2AFD4117003256E0 /* Movies */,
 				84FB3D442B499A0800B860FC /* MoviesTests */,
 				8484BFEE2AFD4117003256E0 /* Products */,
@@ -114,6 +113,7 @@
 				8484BFF42AFD411C003256E0 /* Assets.xcassets */,
 				8484BFF62AFD411C003256E0 /* Movies.entitlements */,
 				8484BFF72AFD411C003256E0 /* Preview Content */,
+				84FB3D5D2B4CD10900B860FC /* Secrets.xcconfig */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -327,7 +327,7 @@
 /* Begin XCBuildConfiguration section */
 		8484BFFA2AFD411C003256E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84FB3D5B2B4CCC8000B860FC /* Secrets.xcconfig */;
+			baseConfigurationReference = 84FB3D5D2B4CD10900B860FC /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
@@ -389,7 +389,7 @@
 		};
 		8484BFFB2AFD411C003256E0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 84FB3D5B2B4CCC8000B860FC /* Secrets.xcconfig */;
+			baseConfigurationReference = 84FB3D5D2B4CD10900B860FC /* Secrets.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
