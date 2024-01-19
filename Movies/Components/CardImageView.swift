@@ -17,11 +17,14 @@ struct CardImageView: View {
           AsyncImage(url: url) { phase in
             switch phase {
             case .empty:
-              ProgressView().frame(minWidth: 180, minHeight: 250)
+              ProgressView()
+                .progressViewStyle(CircularProgressViewStyle(tint: .red))
+                .scaleEffect(2.0, anchor: .center)
+                .frame(minWidth: 180, minHeight: 250)
             case .success(let image):
               image.resizable()
             case .failure:
-              Image(systemName: "photo")
+              Image(systemName: "photo").frame(minWidth: 180, minHeight: 250)
               
             @unknown default:
               fatalError("Unexpected case")

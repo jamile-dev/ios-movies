@@ -7,16 +7,36 @@
 
 import SwiftUI
 
-@MainActor
 class MovieListViewModel: ObservableObject {
+  private let movieRepository: MovieRepository
   @Published var movies: [Movie] = []
+  @Published var errorMessage: Error?
+  @Published var isLoading: Bool = false
   
-  func fetchPopularMovies() async {
-    do {
-      let response = try await MovieService.fetchPopularMovies()
-      self.movies = response.results
-    } catch {
-      print("Error fetching popular movies: \(error)")
+  init(movieRepository: MovieRepository = MovieRepositoryImpl()) {
+    self.movieRepository = movieRepository
+  }
+  
+  func fetchMovies() {
+    Task {
+      do {
+        isLoading = true
+        
+        let result = try await movieRepository.getPopularMovies()
+        
+        switch result {
+        case .success(let fetchedMovies):
+          movies = fetchedMovies.results
+        case .failure(let fetchError):
+          errorMessage = fetchError
+        case .loading: break
+        }
+        
+        isLoading = false
+      } catch {
+        errorMessage = error
+        isLoading = false
+      }
     }
   }
 }
