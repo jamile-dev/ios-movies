@@ -7,10 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8432FCAA2B64213800DBB28A /* MoviesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484BFF02AFD4117003256E0 /* MoviesApp.swift */; };
 		84347E852B1D621800BBE80D /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84347E842B1D621800BBE80D /* Movie.swift */; };
 		84347E872B1D628400BBE80D /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84347E862B1D628400BBE80D /* APIClient.swift */; };
 		84347E8D2B1D62E500BBE80D /* MovieViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84347E8C2B1D62E500BBE80D /* MovieViewModel.swift */; };
-		8484BFF12AFD4117003256E0 /* MoviesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484BFF02AFD4117003256E0 /* MoviesApp.swift */; };
 		8484BFF32AFD4117003256E0 /* MovieListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8484BFF22AFD4117003256E0 /* MovieListView.swift */; };
 		8484BFF52AFD411C003256E0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8484BFF42AFD411C003256E0 /* Assets.xcassets */; };
 		8484BFF92AFD411C003256E0 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8484BFF82AFD411C003256E0 /* Preview Assets.xcassets */; };
@@ -114,16 +114,16 @@
 		8484BFEF2AFD4117003256E0 /* Movies */ = {
 			isa = PBXGroup;
 			children = (
+				8484BFF02AFD4117003256E0 /* MoviesApp.swift */,
+				8484BFF42AFD411C003256E0 /* Assets.xcassets */,
+				84FB3D5D2B4CD10900B860FC /* Secrets.xcconfig */,
+				8484BFF72AFD411C003256E0 /* Preview Content */,
+				8484BFF62AFD411C003256E0 /* Movies.entitlements */,
 				84FB3D5C2B4CCDB200B860FC /* Info.plist */,
 				84FB3D3A2B47662000B860FC /* ViewModel */,
 				84FB3D352B4760C800B860FC /* Components */,
 				84FB3D342B4760C100B860FC /* Screens */,
 				849387AD2B0ABE0A00FD735E /* Data */,
-				8484BFF02AFD4117003256E0 /* MoviesApp.swift */,
-				8484BFF42AFD411C003256E0 /* Assets.xcassets */,
-				8484BFF62AFD411C003256E0 /* Movies.entitlements */,
-				8484BFF72AFD411C003256E0 /* Preview Content */,
-				84FB3D5D2B4CD10900B860FC /* Secrets.xcconfig */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -325,8 +325,8 @@
 				84347E852B1D621800BBE80D /* Movie.swift in Sources */,
 				84C8AE8C2B5A9BC300C074DD /* LoadingView.swift in Sources */,
 				84347E872B1D628400BBE80D /* APIClient.swift in Sources */,
-				8484BFF12AFD4117003256E0 /* MoviesApp.swift in Sources */,
 				84EC4BB62B262D0300485F25 /* RequestType.swift in Sources */,
+				8432FCAA2B64213800DBB28A /* MoviesApp.swift in Sources */,
 				84FB3D372B47610600B860FC /* CardImageView.swift in Sources */,
 				84EC4BBA2B26345500485F25 /* APIError.swift in Sources */,
 				84C8AE882B5A7DD800C074DD /* ResultType.swift in Sources */,

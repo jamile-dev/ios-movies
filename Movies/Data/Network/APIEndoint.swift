@@ -21,7 +21,9 @@ extension APIEndpoint {
     components.scheme = "https"
     components.host = "api.themoviedb.org"
     components.path = path
-    components.queryItems = queryItems + [URLQueryItem(name: "api_key", value: Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String)]
+    components.queryItems = queryItems + [
+      URLQueryItem(name: "api_key", value: Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String),
+    ]
     
     return components.url
   }

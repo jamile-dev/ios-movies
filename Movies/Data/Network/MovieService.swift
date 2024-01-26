@@ -8,8 +8,8 @@
 import Foundation
 
 struct MovieService {
-  static func fetchPopularMovies() async throws -> MovieListResponse {
-    let endpoint = MovieEndpoint.popular
+  static func fetchPopularMovies(page: Int) async throws -> MovieListResponse {
+    let endpoint = MovieEndpoint.popular(page: page)
     return try await APIClient.request(endpoint)
   }
 }

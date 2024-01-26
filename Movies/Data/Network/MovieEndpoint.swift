@@ -8,7 +8,7 @@
 import Foundation
 
 enum MovieEndpoint: APIEndpoint {
-  case popular
+  case popular(page: Int)
   
   var path: String {
     switch self {
@@ -18,6 +18,11 @@ enum MovieEndpoint: APIEndpoint {
   }
   
   var queryItems: [URLQueryItem] {
-    return []
+    switch self {
+    case .popular(let page):
+      return [
+        URLQueryItem(name: "page", value: String(page))
+      ]
+    }
   }
 }

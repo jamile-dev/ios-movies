@@ -8,13 +8,13 @@
 import Foundation
 
 protocol MovieRepository {
-  func getPopularMovies() async throws -> ResultType<MovieListResponse>
+  func getPopularMovies(page: Int) async throws -> ResultType<MovieListResponse>
 }
 
 class MovieRepositoryImpl: MovieRepository {
-  func getPopularMovies() async -> ResultType<MovieListResponse> {
+  func getPopularMovies(page: Int) async -> ResultType<MovieListResponse> {
     do {
-      let data = try await MovieService.fetchPopularMovies()
+      let data = try await MovieService.fetchPopularMovies(page: page)
       return .success(data)
     } catch {
       return .failure(error)

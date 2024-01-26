@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct HomeScreen: View {
-  @ObservedObject private var viewModel = MovieListViewModel()
+  @ObservedObject private var viewModel = MovieViewModel()
   
   var body: some View {
     NavigationView {
@@ -24,6 +24,11 @@ struct HomeScreen: View {
                 ForEach(viewModel.movies) { movie in
                   VStack(alignment: .leading) {
                     CardImageView(movie: movie).cornerRadius(10)
+                      .task {
+                        if viewModel.hasReachedEnd(of: movie) && !viewModel.isFetching {
+                          await viewModel.fetchNextSetOfMovies()
+                        }
+                      }
                     Text(movie.title)
                       .font(.caption)
                       .lineLimit(1)
@@ -39,8 +44,8 @@ struct HomeScreen: View {
       }
       .navigationTitle("Popular Movies 🍿")
     }
-    .onAppear {
-      viewModel.fetchMovies()
+    .task {
+      await viewModel.fetchMovies()
     }
   }
 }
