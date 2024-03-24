@@ -2,25 +2,19 @@ name: iOS Tests
 
 on:
   push:
-    branches: [ main ] # Você pode ajustar para a branch principal do seu repositório
+    branches: [ main ]
   pull_request:
-    branches: [ main ] # Você pode ajustar para a branch principal do seu repositório
+    branches: [ main ]
 
 jobs:
   test:
     runs-on: macos-latest
+    container:
+      image: swift:latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
       
-    - name: Set up Xcode
-      uses: actions/setup-xcode@v2
-      with:
-        xcode-version: '13' # Ajuste para a versão do Xcode que você está usando
-      
-    - name: Install Dependencies
-      run: |
-        xcrun simctl list
-
     - name: Build and Test
-      run: xcodebuild -scheme "Movies" -destination "platform=iOS Simulator,name=iPhone 13" test
+      run: |
+        swift test
