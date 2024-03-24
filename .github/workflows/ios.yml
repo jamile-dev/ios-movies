@@ -18,7 +18,7 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode_14.2.app && /usr/bin/xcodebuild -version
     - name: Set up Info.plist
-      uses: spolisetty/setup-plist@v1
+      uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
       with:
         plist-path: 'Movies/Info.plist'
     - name: Run unit tests
