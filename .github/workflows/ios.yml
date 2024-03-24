@@ -12,12 +12,12 @@ jobs:
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
-      
-    - name: Set up Xcode
-      uses: actions/setup-xcode@v2
-      with:
-        xcode-version: '13'
-      
+
+    - name: Install Xcode
+      run: |
+        sudo xcode-select --switch /Applications/Xcode.app
+        sudo xcodebuild -runFirstLaunch
+
     - name: Install Dependencies
       run: |
         xcrun simctl list
