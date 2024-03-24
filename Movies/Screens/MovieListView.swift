@@ -8,44 +8,54 @@
 import SwiftUI
 
 struct HomeScreen: View {
-  @ObservedObject private var viewModel = MovieViewModel()
+  @StateObject private var viewModel = MovieViewModel()
   
   var body: some View {
-    NavigationView {
-      VStack {
-        if viewModel.isLoading {
-          LoadingView()
-        } else if let error = viewModel.errorMessage {
-          ErrorView(message: error.localizedDescription)
-        } else if !viewModel.movies.isEmpty {
-          ScrollView {
-            LazyVGrid(columns: [
-              GridItem(.flexible()), GridItem(.flexible())], spacing: 20) {
+    TabView {
+      NavigationView {
+        VStack {
+          if viewModel.isLoading {
+            LoadingView()
+          } else if let error = viewModel.errorMessage {
+            ErrorView(message: error.localizedDescription)
+          } else if !viewModel.movies.isEmpty {
+            ScrollView {
+              LazyVStack(alignment: .leading, spacing: 10, pinnedViews: .sectionHeaders) {
                 ForEach(viewModel.movies) { movie in
-                  VStack(alignment: .leading) {
-                    CardImageView(movie: movie).cornerRadius(10)
-                      .task {
-                        if viewModel.hasReachedEnd(of: movie) && !viewModel.isFetching {
-                          await viewModel.fetchNextSetOfMovies()
-                        }
+                  MovieRow(movie: movie).cornerRadius(10).padding(5)
+                    .task {
+                      if viewModel.hasReachedEnd(of: movie) && !viewModel.isFetching {
+                        await viewModel.fetchNextSetOfMovies()
                       }
-                    Text(movie.title)
-                      .font(.caption)
-                      .lineLimit(1)
-                      .bold()
-                      .padding(.top, 4)
-                  }
+                    }
                 }
               }
-              .padding(10)
-          }.padding(10)
-          
+            }
+          }
+        }.task {
+          await viewModel.fetchMovies()
         }
+        .navigationTitle("Popular Movies 🍿")
+      }.tabItem {
+        Image(systemName: "list.dash")
+        Text("All movies")
       }
-      .navigationTitle("Popular Movies 🍿")
-    }
-    .task {
-      await viewModel.fetchMovies()
+      .environmentObject(viewModel)
+      
+      NavigationView {
+        VStack {
+          List {
+            ForEach(viewModel.favoriteMovies) { movie in
+              MovieRow(movie: movie)
+            }
+          }
+          .navigationTitle("Favorites 🎥")
+        }
+      }.tabItem {
+        Image(systemName: "star.fill")
+        Text("Favorites")
+      }
+      .environmentObject(viewModel)
     }
   }
 }
