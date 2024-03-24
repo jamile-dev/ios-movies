@@ -9,12 +9,18 @@ on:
 jobs:
   test:
     runs-on: macos-latest
-    container:
-      image: swift:latest
     steps:
     - name: Checkout Repository
       uses: actions/checkout@v2
       
-    - name: Build and Test
+    - name: Set up Xcode
+      uses: actions/setup-xcode@v2
+      with:
+        xcode-version: '13'
+      
+    - name: Install Dependencies
       run: |
-        swift test
+        xcrun simctl list
+        
+    - name: Build and Test
+      run: xcodebuild -scheme "Movies" -destination "platform=iOS Simulator,name=iPhone 13" test
