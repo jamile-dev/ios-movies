@@ -1,19 +1,26 @@
-name: iOS starter workflow
+name: iOS Tests
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ main ] # Você pode ajustar para a branch principal do seu repositório
   pull_request:
-    branches: [ "main" ]
+    branches: [ main ] # Você pode ajustar para a branch principal do seu repositório
 
 jobs:
-  build:
-    name: Build and analyze and test using xcodebuild command
+  test:
     runs-on: macos-latest
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Build
-        run: |
-          xcodebuild clean build analyze -scheme Movies -sdk iphonesimulator -destination 'platform:iOS, name:Any iOS Device 11'
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+      
+    - name: Set up Xcode
+      uses: actions/setup-xcode@v2
+      with:
+        xcode-version: '13' # Ajuste para a versão do Xcode que você está usando
+      
+    - name: Install Dependencies
+      run: |
+        xcrun simctl list
+
+    - name: Build and Test
+      run: xcodebuild -scheme "YourSchemeName" -destination "platform=iOS Simulator,name=iPhone 13" test
