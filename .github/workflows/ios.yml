@@ -20,7 +20,7 @@ jobs:
     - name: Set up Info.plist
       uses: damienaicheh/update-ios-version-info-plist-action@v1.0.0
       with:
-        plist-path: 'Movies/Info.plist'
+        info-plist-path: 'Movies/Info.plist'
     - name: Run unit tests
       run: xcodebuild clean test -scheme Movies -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' | xcpretty && exit ${PIPESTATUS[0]}
 
