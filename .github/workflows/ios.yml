@@ -21,6 +21,9 @@ jobs:
     - name: Install Dependencies
       run: |
         xcrun simctl list
-        
+
+    - name: List Simulators
+      run: xcrun simctl list devices
+
     - name: Build and Test
-      run: xcodebuild -scheme "Movies" -destination "platform=iOS Simulator,name=Any iOS Simulator Device" test
+      run: xcodebuild -scheme "Movies" -destination "platform=iOS Simulator,name=Iphone 15 Pro" test
