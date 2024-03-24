@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+      
 jobs:
   Run_workspace_Tests:
     runs-on: macOS-latest
@@ -16,5 +17,10 @@ jobs:
       run: ls /Applications | grep Xcode
     - name: Select Xcode
       run: sudo xcode-select -switch /Applications/Xcode_14.2.app && /usr/bin/xcodebuild -version
+    - name: Set up Info.plist
+      uses: spolisetty/setup-plist@v1
+      with:
+        plist-path: 'Movies/Info.plist'
     - name: Run unit tests
       run: xcodebuild clean test -scheme Movies -destination 'platform=iOS Simulator,name=iPhone 14,OS=16.2' | xcpretty && exit ${PIPESTATUS[0]}
+
