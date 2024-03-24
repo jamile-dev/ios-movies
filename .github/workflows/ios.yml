@@ -23,4 +23,4 @@ jobs:
         xcrun simctl list
         
     - name: Build and Test
-      run: xcodebuild test -scheme Movies -project Movies.xcodeproj -destination 'platform:iOS Simulator, id:437E5131-A475-496C-8B52-5909985A90FB, OS:17.2, name:iPhone 15' | xcpretty && exit ${PIPESTATUS[0]}
+      run: xcodebuild -scheme Movies -destination "platform=iOS Simulator,id=437E5131-A475-496C-8B52-5909985A90FB,OS=17.2,name=iPhone 15" test
