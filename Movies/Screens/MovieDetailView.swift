@@ -11,8 +11,9 @@ import SwiftUI
 struct MovieDetailView: View {
   let movie: Movie
   var body: some View {
-    ScrollView {
-      VStack {
+    ZStack {
+      Color.background.ignoresSafeArea()
+      ScrollView {
         AsyncImage(url: movie.posterURL) { image in
           image.resizable().scaledToFit()
         } placeholder: {  

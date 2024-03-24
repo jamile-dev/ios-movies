@@ -13,10 +13,9 @@ struct HomeScreen: View {
   var body: some View {
     TabView {
       NavigationView {
-        VStack {
-          if viewModel.isLoading {
-            LoadingView()
-          } else if let error = viewModel.errorMessage {
+        ZStack {
+          Color.background.ignoresSafeArea()
+          if let error = viewModel.errorMessage {
             ErrorView(message: error.localizedDescription)
           } else if !viewModel.movies.isEmpty {
             ScrollView {
@@ -28,7 +27,9 @@ struct HomeScreen: View {
                         await viewModel.fetchNextSetOfMovies()
                       }
                     }
-                }
+                }.overlay(RoundedRectangle(cornerRadius: 10)
+                 .stroke(Color.gray, lineWidth: 0.5))
+                 .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
               }
             }
           }
@@ -43,10 +44,15 @@ struct HomeScreen: View {
       .environmentObject(viewModel)
       
       NavigationView {
-        VStack {
-          List {
-            ForEach(viewModel.favoriteMovies) { movie in
-              MovieRow(movie: movie)
+        ZStack {
+          Color.background.ignoresSafeArea()
+          ScrollView {
+            LazyVStack(alignment: .leading, spacing: 10) {
+              ForEach(viewModel.favoriteMovies) { movie in
+                MovieRow(movie: movie)
+              }.overlay(RoundedRectangle(cornerRadius: 10)
+               .stroke(Color.gray, lineWidth: 0.5))
+               .padding(EdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15))
             }
           }
           .navigationTitle("Favorites 🎥")

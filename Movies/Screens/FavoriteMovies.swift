@@ -10,10 +10,6 @@ import SwiftUI
 struct FavoriteMovies: View {
   let movie: Movie
   var body: some View {
-    ScrollView {
-      HStack {
-        MovieRow(movie: movie).cornerRadius(10).padding(5)
-      }
-    }
+    MovieRow(movie: movie)
   }
 }
