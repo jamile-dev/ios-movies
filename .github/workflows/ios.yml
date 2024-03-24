@@ -26,5 +26,4 @@ jobs:
       run: xcrun simctl list devices
 
     - name: Build and Test
-      run: |
-        xcodebuild -scheme "Movies" -destination "platform=iOS" test
+      run: xcodebuild -scheme "Movies" -destination "platform=iOS" test
