@@ -42,7 +42,7 @@ class MovieRepositoryTests: XCTestCase {
   
   func testGetPopularMoviesFailure() async throws {
     // Arrange
-    let page = -1 // Página inválida para forçar o erro
+    let page = -1 // Invalid number to return an error
     
     // Act
     let result = try await movieRepository.getPopularMovies(page: page)
