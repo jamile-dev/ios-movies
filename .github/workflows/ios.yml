@@ -16,4 +16,4 @@ jobs:
 
     - name: Build
       run: |
-        xcodebuild clean build -workspace Movies.xcworkspace -scheme "Movies" CODE_SIGNING_ALLOWED=NO
+        xcodebuild clean build -workspace project.xcworkspace -scheme "Movies" CODE_SIGNING_ALLOWED=NO
