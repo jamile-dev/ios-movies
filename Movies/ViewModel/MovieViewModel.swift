@@ -8,11 +8,18 @@
 import SwiftUI
 
 class MovieViewModel: ObservableObject {
-  private let movieRepository: MovieRepository
+  private let favoriteMovieUseCase: FavoriteMovieUseCase
+  private let popularMovieUseCase: PopularMovieUseCase
+  
+  let favoriteMovieRepository: FavoriteMovieRepository = FavoriteMovieRepository()
+  let popularMovieRepository: PopularMovieRepository = PopularMovieRepository()
+
+  var isLoadingNextPage = false
   @Published var movies: [Movie] = []
   @Published var favoriteMovies: [Movie] = []
   @Published var errorMessage: Error?
   @Published private(set) var viewState: ViewState?
+  
   private var currentPage: Int = 1
   var isLoading: Bool {
     viewState == .loading
@@ -22,8 +29,12 @@ class MovieViewModel: ObservableObject {
     viewState == .fetching
   }
   
-  init(movieRepository: MovieRepository = MovieRepositoryImpl()) {
-    self.movieRepository = movieRepository
+  init() {
+    // TODO
+    self.favoriteMovieUseCase = FavoriteMovieUseCase(repository: favoriteMovieRepository)
+    self.popularMovieUseCase = PopularMovieUseCase(repository: popularMovieRepository)
+    updateMovies()
+    updateFavoriteMovies()
   }
   
   @MainActor
@@ -34,7 +45,7 @@ class MovieViewModel: ObservableObject {
         
         defer { viewState = .finished }
         
-        let result = try await movieRepository.getPopularMovies(page: currentPage)
+        let result = try await popularMovieUseCase.execute(page: currentPage)
         
         switch result {
         case .success(let fetchedMovies):
@@ -43,7 +54,6 @@ class MovieViewModel: ObservableObject {
           }
         case .failure(let fetchError):
           errorMessage = fetchError
-        case .loading: break
         }
         
       } catch {
@@ -53,45 +63,64 @@ class MovieViewModel: ObservableObject {
   }
   
   @MainActor
-  func fetchNextSetOfMovies() async {
+  func fetchNextSetOfMovies(for movie: Movie) async {
+    guard !isLoadingNextPage else { return }
+    guard hasReachedEnd(of: movie) else { return }
+    
+    isLoadingNextPage = true
     viewState = .fetching
-    defer { viewState = .finished }
+    defer {
+      isLoadingNextPage = false
+      viewState = .finished
+    }
     currentPage += 1
     
     do {
-      let result = try await movieRepository.getPopularMovies(page: currentPage)
-      
+      let result = try await popularMovieUseCase.execute(page: currentPage)
       switch result {
       case .success(let fetchedMovies):
-        self.movies = fetchedMovies.results.map { movie in
+        // TODO: refactor to repository
+        self.movies += fetchedMovies.results.map { movie in
           return APIMovie.fromAPIModel(apiModel: movie)
         }
       case .failure(let fetchError):
         errorMessage = fetchError
-      case .loading: break
       }
-      
     } catch {
       errorMessage = error
     }
   }
   
   func hasReachedEnd(of movie: Movie) -> Bool {
-    movies.last?.id == movie.id
+    guard let lastMovie = movies.last else { return false }
+    return lastMovie.id == movie.id
   }
   
-  
-  func toggleFavorite(movie: inout Movie) {
-    if let index = favoriteMovies.firstIndex(where: { $0.id == movie.id }) {
-      favoriteMovies.remove(at: index)
+  func toggleFavorite(movie: Movie) {
+    if isMovieFavorite(movie: movie) {
+      favoriteMovieUseCase.executeRemoveFavoriteMovie(movie: movie)
     } else {
-      favoriteMovies.append(movie)
+      favoriteMovieUseCase.executeAddFavoriteMovie(movie: movie)
     }
-    movie.isFavorite.toggle()
+    updateFavoriteMovies()
   }
   
+  func isMovieFavorite(movie: Movie) -> Bool {
+    return favoriteMovieUseCase.isMovieFavorite(movie: movie)
+  }
+  
+  private func updateFavoriteMovies() {
+    favoriteMovies = favoriteMovieUseCase.getFavoriteMovies()
+  }
+  private func updateMovies() {
+    let updatedMovies = movies.map { movie in
+      var updatedMovie = movie
+      updatedMovie.isFavorite = favoriteMovies.contains(movie)
+      return updatedMovie
+    }
+    movies = updatedMovies
+  }
 }
-
 
 extension MovieViewModel {
   enum ViewState {

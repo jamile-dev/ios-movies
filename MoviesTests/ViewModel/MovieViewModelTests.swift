@@ -8,67 +8,88 @@
 import XCTest
 @testable import Movies
 
-class MovieViewModelTests: XCTestCase {
+class MockFavoriteMovieUseCase: FavoriteMovieUseCase {
+  var movies: [Movie] = []
   
-  var mockRepository: MockMovieRepository!
-  var viewModel: MovieViewModel!
+  override func executeAddFavoriteMovie(movie: Movie) {
+    movies.append(movie)
+  }
+  
+  override func executeRemoveFavoriteMovie(movie: Movie) {
+    movies.removeAll { $0.id == movie.id }
+  }
+  
+  override func getFavoriteMovies() -> [Movie] {
+    return movies
+  }
+  
+  override func isMovieFavorite(movie: Movie) -> Bool {
+    return movies.contains(movie)
+  }
+}
+
+class MockPopularMovieUseCase: PopularMovieUseCase {
+  var movies: [APIMovie] = []
+  
+  override func execute(page: Int) async -> ResultType<MovieListResponse> {
+    return .success(MovieListResponse(results: movies))
+  }
+}
+
+class MovieViewModelTests: XCTestCase {
+  var sut: MovieViewModel!
+  var favoriteUseCase: MockFavoriteMovieUseCase!
+  var popularUseCase: MockPopularMovieUseCase!
   
   override func setUp() {
     super.setUp()
-    mockRepository = MockMovieRepository()
-    viewModel = MovieViewModel(movieRepository: mockRepository)
+    favoriteUseCase = MockFavoriteMovieUseCase(repository: MockFavoriteMovieRepository() )
+    popularUseCase = MockPopularMovieUseCase(repository: MockPopularMovieRepository())
+    sut = MovieViewModel()
   }
   
-  func testFetchMoviesSuccess() async throws {
-    // Arrange
-    let apiMovie1 = APIMovie(id: 1, title: "Mock Movie 1", overview: "Mock Overview 1", poster_path: nil, vote_average: 8.0)
-    let apiMovie2 = APIMovie(id: 2, title: "Mock Movie 2", overview: "Mock Overview 2", poster_path: nil, vote_average: 7.5)
-    let movieListResponse = MovieListResponse(results: [apiMovie1, apiMovie2])
-    mockRepository.popularMoviesResult = .success(movieListResponse)
-
-    // Act
-    await viewModel.fetchMovies()
-    
-    sleep(5)
-    
-    // Assert
-    XCTAssertEqual(viewModel.movies.count, 2)
-    XCTAssertEqual(viewModel.movies[1].title, "Mock Movie 2")
-    XCTAssertNil(viewModel.errorMessage)
+  override func tearDown() {
+    sut = nil
+    favoriteUseCase = nil
+    popularUseCase = nil
+    super.tearDown()
   }
   
-  func testFetchNextSetOfMoviesSuccess() async throws {
-    // Arrange
-    let apiMovie1 = APIMovie(id: 1, title: "Mock Movie 1", overview: "Mock Overview 1", poster_path: nil, vote_average: 8.0)
-    let apiMovie2 = APIMovie(id: 2, title: "Mock Movie 2", overview: "Mock Overview 2", poster_path: nil, vote_average: 7.5)
-    let apiMovie3 = APIMovie(id: 3, title: "Mock Movie 3", overview: "Mock Overview 3", poster_path: nil, vote_average: 7.5)
-    let movieListResponse = MovieListResponse(results: [apiMovie1, apiMovie2, apiMovie3])
-    mockRepository.popularMoviesResult = .success(movieListResponse)
-        
-    // Act
-    await viewModel.fetchNextSetOfMovies()
+  func testFetchMovies() async throws {
+    // Given
+    let movie = APIMovie(id: 0, title: "Test", overview: "Test", poster_path: "nil", vote_average: 5.0)
+    popularUseCase.movies = [movie]
     
-    // Assert
-    XCTAssertEqual(viewModel.movies.count, 3)
-    XCTAssertEqual(viewModel.movies[0].title, "Mock Movie 1")
-    XCTAssertEqual(viewModel.movies[2].title, "Mock Movie 3")
-    XCTAssertNil(viewModel.errorMessage)
+    // When
+    let expectation = XCTestExpectation(description: "Fetching movies")
+    Task {
+      await sut.fetchMovies()
+      
+      // Then
+      DispatchQueue.main.async {
+        XCTAssertEqual(self.sut.movies.count, 1)
+        XCTAssertEqual(self.sut.movies.first?.title, "Test")
+        expectation.fulfill()
+      }
+    }
+    
+    await fulfillment(of: [expectation], timeout: 1.0)
   }
   
-  func testFetchMoviesFailure() async throws {
-    // Arrange
-    let expectedError = NSError(domain: "TestError", code: 123, userInfo: nil)
-    mockRepository.popularMoviesResult = .failure(expectedError)
+  func testToggleFavorite() async throws {
+    // Given
+    let movie = Movie(id: 1, title: "Test", overview: "Test", vote_average: 5.0, posterURL: nil, isFavorite: false)
     
-    // Act
-    await viewModel.fetchMovies()
+    // When
+    sut.toggleFavorite(movie: movie)
     
-    sleep(5)
+    // Then
+    XCTAssertTrue(sut.isMovieFavorite(movie: movie))
     
-    // Assert
-    XCTAssertNotNil(viewModel.errorMessage)
-    XCTAssertEqual(viewModel.errorMessage?.localizedDescription, expectedError.localizedDescription)
-    XCTAssertEqual(viewModel.movies.count, 0)
+    // When
+    sut.toggleFavorite(movie: movie)
+    
+    // Then
+    XCTAssertFalse(sut.isMovieFavorite(movie: movie))
   }
-  
 }

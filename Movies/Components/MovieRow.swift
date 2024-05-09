@@ -33,17 +33,19 @@ struct MovieRow: View {
           }
           .frame(width: 180, height: 250)
         }
-        VStack(alignment: .listRowSeparatorLeading, spacing: 5) {
+        VStack(alignment: .listRowSeparatorLeading, spacing: 1) {
           Text(movie.title)
-            .font(.title2)
+            .font(.title3)
             .fontWeight(.bold)
-            .foregroundColor(.primary)
+            .foregroundColor(.white)
+            .lineLimit(2)
+            .multilineTextAlignment(.leading)
           
           Text(movie.overview)
             .font(.subheadline)
             .multilineTextAlignment(.leading)
             .lineLimit(4, reservesSpace: true)
-            .foregroundColor(.primary)
+            .foregroundColor(.white)
             .truncationMode(.tail)
             .padding(EdgeInsets(top: 3, leading: 0, bottom: 0, trailing: 0))
           
@@ -51,9 +53,9 @@ struct MovieRow: View {
           
           HStack(alignment: .bottom) {
             Button(action: {
-              viewModel.toggleFavorite(movie: &movie)
+              viewModel.toggleFavorite(movie: movie)
             }) {
-              Image(systemName: movie.isFavorite ? "heart.fill" : "heart")
+              Image(systemName: viewModel.isMovieFavorite(movie: movie) ? "heart.fill" : "heart")
             }
             
             Spacer()

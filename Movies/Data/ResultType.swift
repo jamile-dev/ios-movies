@@ -9,6 +9,5 @@ import Foundation
 
 enum ResultType<T> {
   case success(T)
-  case loading
   case failure(Error)
 }
