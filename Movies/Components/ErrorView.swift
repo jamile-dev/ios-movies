@@ -18,6 +18,7 @@ struct ErrorView: View {
         .padding(5)
       Text(message)
         .font(.title2)
+        .foregroundColor(.white)
     }
   }
 }

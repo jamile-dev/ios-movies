@@ -23,9 +23,11 @@ struct MovieDetailView: View {
         Text(movie.title)
           .font(.title)
           .padding()
+          .foregroundColor(.white)
         
         Text(movie.overview)
           .padding()
+          .foregroundColor(.white)
       }
     }
   }
