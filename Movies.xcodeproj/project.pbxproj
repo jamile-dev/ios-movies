@@ -105,14 +105,67 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		84347E832B1D613100BBE80D /* Model */ = {
+		8428DEA82BF118E700BFA084 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				8484BFF02AFD4117003256E0 /* MoviesApp.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		8428DEA92BF118F100BFA084 /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+				84347E832B1D613100BBE80D /* Entities */,
+				84AD02AA2BBDC3C4007248D0 /* UseCases */,
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		8428DEAA2BF1190500BFA084 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				8428DEAC2BF1196000BFA084 /* View */,
+				84FB3D3A2B47662000B860FC /* ViewModel */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		8428DEAB2BF1191300BFA084 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				8428DEAD2BF11AB800BFA084 /* Network */,
+			);
+			path = Infrastructure;
+			sourceTree = "<group>";
+		};
+		8428DEAC2BF1196000BFA084 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				84FB3D342B4760C100B860FC /* Screens */,
+				84FB3D352B4760C800B860FC /* Components */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8428DEAD2BF11AB800BFA084 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				84EC4BB52B262D0300485F25 /* RequestType.swift */,
+				84347E862B1D628400BBE80D /* APIClient.swift */,
+				84C8AE872B5A7DD800C074DD /* ResultType.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		84347E832B1D613100BBE80D /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				84347E842B1D621800BBE80D /* APIMovie.swift */,
 				842B80542B8B9C52002A0F2D /* FavoriteMovie.swift */,
 				842B80562B8BA67C002A0F2D /* Movie.swift */,
 			);
-			path = Model;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		8484BFE42AFD4117003256E0 = {
@@ -136,16 +189,16 @@
 		8484BFEF2AFD4117003256E0 /* Movies */ = {
 			isa = PBXGroup;
 			children = (
-				8484BFF02AFD4117003256E0 /* MoviesApp.swift */,
+				8428DEA82BF118E700BFA084 /* Application */,
+				8428DEA92BF118F100BFA084 /* Domain */,
+				8428DEAB2BF1191300BFA084 /* Infrastructure */,
+				8428DEAA2BF1190500BFA084 /* Presentation */,
+				849387AD2B0ABE0A00FD735E /* Data */,
 				8484BFF42AFD411C003256E0 /* Assets.xcassets */,
 				84FB3D5D2B4CD10900B860FC /* Secrets.xcconfig */,
-				8484BFF72AFD411C003256E0 /* Preview Content */,
 				8484BFF62AFD411C003256E0 /* Movies.entitlements */,
 				84FB3D5C2B4CCDB200B860FC /* Info.plist */,
-				84FB3D3A2B47662000B860FC /* ViewModel */,
-				84FB3D352B4760C800B860FC /* Components */,
-				84FB3D342B4760C100B860FC /* Screens */,
-				849387AD2B0ABE0A00FD735E /* Data */,
+				8484BFF72AFD411C003256E0 /* Preview Content */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -171,11 +224,8 @@
 		849387AD2B0ABE0A00FD735E /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				84AD02AA2BBDC3C4007248D0 /* UseCase */,
-				84C8AE862B5A7DB300C074DD /* Repository */,
-				84347E832B1D613100BBE80D /* Model */,
+				84C8AE862B5A7DB300C074DD /* Repositories */,
 				849387AE2B0ABE1A00FD735E /* Network */,
-				84C8AE872B5A7DD800C074DD /* ResultType.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -183,8 +233,6 @@
 		849387AE2B0ABE1A00FD735E /* Network */ = {
 			isa = PBXGroup;
 			children = (
-				84347E862B1D628400BBE80D /* APIClient.swift */,
-				84EC4BB52B262D0300485F25 /* RequestType.swift */,
 				84EC4BB92B26345500485F25 /* APIError.swift */,
 				84EC4BC52B29369F00485F25 /* APIEndoint.swift */,
 				84EC4BC72B293B7B00485F25 /* MovieService.swift */,
@@ -193,22 +241,22 @@
 			path = Network;
 			sourceTree = "<group>";
 		};
-		84AD02AA2BBDC3C4007248D0 /* UseCase */ = {
+		84AD02AA2BBDC3C4007248D0 /* UseCases */ = {
 			isa = PBXGroup;
 			children = (
 				84AD02AB2BBDC3E2007248D0 /* PopularMovieUseCase.swift */,
 				84AD02AD2BBDC3F1007248D0 /* FavoriteMovieUseCase.swift */,
 			);
-			path = UseCase;
+			path = UseCases;
 			sourceTree = "<group>";
 		};
-		84C8AE862B5A7DB300C074DD /* Repository */ = {
+		84C8AE862B5A7DB300C074DD /* Repositories */ = {
 			isa = PBXGroup;
 			children = (
 				84C8AE892B5A7E0500C074DD /* PopularMovieRepository.swift */,
 				840FF6042BC48E97007C2B6B /* FavoriteMovieRepository.swift */,
 			);
-			path = Repository;
+			path = Repositories;
 			sourceTree = "<group>";
 		};
 		84FB3D342B4760C100B860FC /* Screens */ = {
