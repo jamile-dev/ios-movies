@@ -10,12 +10,9 @@ import Foundation
 class FavoriteMovieUseCase {
   let repository: FavoriteMovieRepository
   
-  
   init(repository: FavoriteMovieRepository) {
     self.repository = repository
   }
-  
-  
   
   func executeAddFavoriteMovie(movie: Movie) {
     repository.addFavoriteMovie(movie: movie)
