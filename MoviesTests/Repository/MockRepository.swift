@@ -8,7 +8,7 @@
 import Foundation
 @testable import Movies
 
-class MockPopularMovieRepository: PopularMovieRepository {
+class MockPopularMovieRepository: PopularMovieRepositoryImpl {
   var popularMoviesResult: ResultType<MovieListResponse>?
   
   override func getPopularMovies(page: Int) async -> ResultType<MovieListResponse> {
@@ -34,7 +34,7 @@ class MockUserDefaults: UserDefaults {
 }
 
 // Mock FavoriteMovieRepository for testing purposes
-class MockFavoriteMovieRepository: FavoriteMovieRepository {
+class MockFavoriteMovieRepository: FavoriteMovieRepositoryImpl {
     var mockUserDefaults = MockUserDefaults()
     
     override func getFavorites() -> [Movie] {

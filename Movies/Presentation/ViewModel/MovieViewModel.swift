@@ -11,8 +11,8 @@ class MovieViewModel: ObservableObject {
   private let favoriteMovieUseCase: FavoriteMovieUseCase
   private let popularMovieUseCase: PopularMovieUseCase
   
-  let favoriteMovieRepository: FavoriteMovieRepository = FavoriteMovieRepository()
-  let popularMovieRepository: PopularMovieRepository = PopularMovieRepository()
+  let favoriteMovieRepository: FavoriteMovieRepositoryImpl = FavoriteMovieRepositoryImpl()
+  let popularMovieRepository: PopularMovieRepositoryImpl = PopularMovieRepositoryImpl()
 
   var isLoadingNextPage = false
   @Published var movies: [Movie] = []

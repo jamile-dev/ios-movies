@@ -7,7 +7,7 @@
 
 import Foundation
 
-class FavoriteMovieRepository {
+class FavoriteMovieRepositoryImpl: FavoriteMovieRepository {
   func addFavoriteMovie(movie: Movie) {
     var favorites = getFavorites()
     favorites.append(movie)
@@ -30,6 +30,7 @@ class FavoriteMovieRepository {
   
   private func saveFavorites(favorites: [Movie]) {
     let encoder = JSONEncoder()
+    encoder.outputFormatting
     if let encoded = try? encoder.encode(favorites) {
       UserDefaults.standard.set(encoded, forKey: "favorite")
     }

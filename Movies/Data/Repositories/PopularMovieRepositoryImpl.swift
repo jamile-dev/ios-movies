@@ -7,7 +7,7 @@
 
 import Foundation
 
-class PopularMovieRepository {
+class PopularMovieRepositoryImpl: PopularMovieRepository {
   func getPopularMovies(page: Int) async -> ResultType<MovieListResponse> {
     do {
       let data = try await MovieService.fetchPopularMovies(page: page)
