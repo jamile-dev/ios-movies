@@ -45,7 +45,7 @@ class MovieViewModel: ObservableObject {
         
         defer { viewState = .finished }
         
-        let result = try await popularMovieUseCase.execute(page: currentPage)
+        let result = await popularMovieUseCase.execute(page: currentPage)
         
         switch result {
         case .success(let fetchedMovies):
@@ -55,9 +55,6 @@ class MovieViewModel: ObservableObject {
         case .failure(let fetchError):
           errorMessage = fetchError
         }
-        
-      } catch {
-        errorMessage = error
       }
     }
   }
@@ -76,7 +73,7 @@ class MovieViewModel: ObservableObject {
     currentPage += 1
     
     do {
-      let result = try await popularMovieUseCase.execute(page: currentPage)
+      let result = await popularMovieUseCase.execute(page: currentPage)
       switch result {
       case .success(let fetchedMovies):
         // TODO: refactor to repository
@@ -86,8 +83,6 @@ class MovieViewModel: ObservableObject {
       case .failure(let fetchError):
         errorMessage = fetchError
       }
-    } catch {
-      errorMessage = error
     }
   }
   

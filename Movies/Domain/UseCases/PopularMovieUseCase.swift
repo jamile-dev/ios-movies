@@ -14,7 +14,7 @@ class PopularMovieUseCase {
     self.repository = repository
   }
   
-  func execute(page: Int) async throws -> ResultType<MovieListResponse>  {
-    try await repository.getPopularMovies(page: page)
+  func execute(page: Int) async -> ResultType<MovieListResponse>  {
+    await repository.getPopularMovies(page: page)
   }
 }

@@ -30,7 +30,6 @@ class FavoriteMovieRepositoryImpl: FavoriteMovieRepository {
   
   private func saveFavorites(favorites: [Movie]) {
     let encoder = JSONEncoder()
-    encoder.outputFormatting
     if let encoded = try? encoder.encode(favorites) {
       UserDefaults.standard.set(encoded, forKey: "favorite")
     }
