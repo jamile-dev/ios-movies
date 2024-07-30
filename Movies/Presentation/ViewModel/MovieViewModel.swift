@@ -30,7 +30,6 @@ class MovieViewModel: ObservableObject {
   }
   
   init() {
-    // TODO
     self.favoriteMovieUseCase = FavoriteMovieUseCase(repository: favoriteMovieRepository)
     self.popularMovieUseCase = PopularMovieUseCase(repository: popularMovieRepository)
     updateMovies()

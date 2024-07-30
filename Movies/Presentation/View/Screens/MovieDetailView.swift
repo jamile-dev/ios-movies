@@ -14,20 +14,26 @@ struct MovieDetailView: View {
     ZStack {
       Color.background.ignoresSafeArea()
       ScrollView {
-        AsyncImage(url: movie.posterURL) { image in
-          image.resizable().scaledToFit()
-        } placeholder: {  
-          ProgressView()
+        VStack {
+          AsyncImage(url: movie.posterURL) { image in
+            image.resizable().scaledToFit().frame(height: 400)
+          } placeholder: {
+            ProgressView()
+          }
+          
+          Text(movie.title)
+            .font(.title)
+            .foregroundColor(.white)
+            .lineLimit(2)
+            .frame(maxWidth: .infinity)
+            .padding(10)
+          
+          
+          Text(movie.overview)
+            .foregroundColor(.white)
+            .frame(maxWidth: .infinity)
+            .padding(10)
         }
-        
-        Text(movie.title)
-          .font(.title)
-          .padding()
-          .foregroundColor(.white)
-        
-        Text(movie.overview)
-          .padding()
-          .foregroundColor(.white)
       }
     }
   }
